@@ -1,0 +1,32 @@
+version: '3.1'
+
+services:
+  n8n:
+    image: n8nio/n8n
+    restart: always
+    ports:
+      - "5678:5678"
+    environment:
+      - GENERIC_TIMEZONE=Asia/Kolkata
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=admin
+      - N8N_BASIC_AUTH_PASSWORD=admin123
+      - NODE_ENV=production
+      - TZ=Asia/Kolkata
+
+      # Twilio
+      - TWILIO_ACCOUNT_SID=${TWILIO_ACCOUNT_SID}
+      - TWILIO_AUTH_TOKEN=${TWILIO_AUTH_TOKEN}
+      - TWILIO_WHATSAPP_NUMBER=${TWILIO_WHATSAPP_NUMBER}
+
+      # Google Drive
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+      - GOOGLE_REFRESH_TOKEN=${GOOGLE_REFRESH_TOKEN}
+
+      # OpenAI
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    volumes:
+      - ./n8n_data:/home/node/.n8n
+    env_file:
+      - .env
